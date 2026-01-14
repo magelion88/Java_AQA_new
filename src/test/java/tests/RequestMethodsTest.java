@@ -39,7 +39,7 @@ public class RequestMethodsTest extends TestBase {
                 .body("data", equalTo(rawTextBody))
                 .body("headers.content-type", containsString("text/plain"))
                 .body("headers.host", equalTo("postman-echo.com"))
-                .body("json", nullValue())  // json будет null при text/plain
+                .body("json", nullValue())
                 .body("url", equalTo("https://postman-echo.com/post"));
     }
 
