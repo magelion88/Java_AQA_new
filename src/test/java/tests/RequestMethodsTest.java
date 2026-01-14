@@ -30,13 +30,13 @@ public class RequestMethodsTest extends TestBase {
         String rawTextBody = "{\n    \"test\": \"value\"\n}";
 
         given()
-                .contentType("text/plain")  // важно: text/plain, а не application/json
+                .contentType("text/plain")
                 .body(rawTextBody)
                 .when()
                 .post("/post")
                 .then()
                 .statusCode(200)
-                .body("data", equalTo(rawTextBody))  // data содержит отправленный текст
+                .body("data", equalTo(rawTextBody))
                 .body("headers.content-type", containsString("text/plain"))
                 .body("headers.host", equalTo("postman-echo.com"))
                 .body("json", nullValue())  // json будет null при text/plain
@@ -46,7 +46,7 @@ public class RequestMethodsTest extends TestBase {
     @Test
     public void testPostFormDataMultiPart() {
         given()
-                .contentType("multipart/form-data")  // multipart вместо urlencoded
+                .contentType("multipart/form-data")
                 .multiPart("foo1", "bar1")
                 .multiPart("foo2", "bar2")
                 .when()
