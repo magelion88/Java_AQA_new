@@ -3,17 +3,6 @@ package tests.SeleniumTests;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import utils.SeleniumTestBase;
-import java.time.Duration;
-
-import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import utils.SeleniumTestBase;
 
 import java.util.List;
@@ -66,12 +55,10 @@ public class MtsTests extends SeleniumTestBase {
 
     @Test
     public void testMoreAboutServices() {
-        // Страница уже открыта, cookie-баннер уже закрыт в @BeforeEach!
 
         String urlBefore = driver.getCurrentUrl();
         System.out.println("URL до клика: " + urlBefore);
 
-        // Находим ссылку
         WebElement link = driver.findElement(
                 By.xpath("//a[normalize-space(text())='Подробнее о сервисе']")
         );
@@ -80,21 +67,17 @@ public class MtsTests extends SeleniumTestBase {
         System.out.println("  Текст: '" + link.getText() + "'");
         System.out.println("  href: " + link.getAttribute("href"));
 
-        // Проверяем
         assertTrue(link.isDisplayed(), "Ссылка должна быть видимой");
         assertTrue(link.isEnabled(), "Ссылка должна быть кликабельной");
 
-        // Кликаем (теперь можно обычным кликом!)
         link.click();
 
-        // Ждём
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        // Проверяем
         String urlAfter = driver.getCurrentUrl();
         System.out.println("URL после клика: " + urlAfter);
 
@@ -107,27 +90,34 @@ public class MtsTests extends SeleniumTestBase {
         }
     }
     @Test
-    public void testPaymentFormOptimized() {
-        long startTime = System.currentTimeMillis();
-
-        // 1. Загрузка (самое долгое)
+    public void testPaymentForm() {
         driver.get("https://www.mts.by/");
 
-        // 2. Быстрое закрытие cookie
         try {
             driver.findElement(By.id("cookie-agree")).click();
         } catch (Exception e) {
-            // Не тратим время на ожидание
         }
 
-        // 3. Прямые быстрые локаторы
         driver.findElement(By.id("connection-phone")).sendKeys("297777777");
         driver.findElement(By.id("connection-sum")).sendKeys("200");
 
-        // 4. Простой поиск кнопки
-        driver.findElement(By.xpath("(//button[@type='submit'])[1]")).click();
+        WebElement continueButton = driver.findElement(
+                By.xpath("//button[text()='Продолжить']")
+        );
 
-        long endTime = System.currentTimeMillis();
-        System.out.println("✅ Тест выполнен за " + (endTime - startTime)/1000.0 + " секунд");
+        System.out.println("Кнопка найдена:");
+        System.out.println("  Текст: '" + continueButton.getText() + "'");
+        System.out.println("  enabled: " + continueButton.isEnabled());
+        System.out.println("  координаты: " + continueButton.getLocation());
+
+        continueButton.click();
+        System.out.println("✅ Кнопка 'Продолжить' нажата!");
+
+        try {
+            Thread.sleep(2000);
+            System.out.println("Текущий URL: " + driver.getCurrentUrl());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
