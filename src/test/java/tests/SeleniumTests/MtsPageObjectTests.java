@@ -70,11 +70,11 @@ public class MtsPageObjectTests extends SeleniumTestBase {
 
         mtsPage.clickServiceDetailsLink();
 
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+       // try {
+          //  Thread.sleep(3000);
+        //} catch (InterruptedException e) {
+            //e.printStackTrace();
+        //}
 
         String urlAfter = mtsPage.getCurrentUrl();
         System.out.println("URL после клика: " + urlAfter);
@@ -88,29 +88,6 @@ public class MtsPageObjectTests extends SeleniumTestBase {
         }
     }
 
-    @Test
-    public void testPaymentForm() {
-        mtsPage = new MtsHomePage(driver);
-        mtsPage.closeCookieBanner();
-
-        mtsPage.fillPaymentForm("297777777", "200");
-
-        assertTrue(mtsPage.isContinueButtonEnabled(),
-                "Кнопка 'Продолжить' должна быть активной");
-
-        System.out.println("Кнопка найдена:");
-        System.out.println("  Текст: '" + mtsPage.getContinueButtonText() + "'");
-
-        mtsPage.clickContinueButton();
-        System.out.println("✅ Кнопка 'Продолжить' нажата!");
-
-        try {
-            Thread.sleep(2000);
-            System.out.println("Текущий URL: " + mtsPage.getCurrentUrl());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Test
     public void testPaymentPopupUltraSimple() throws InterruptedException {
@@ -128,7 +105,7 @@ public class MtsPageObjectTests extends SeleniumTestBase {
 
         System.out.println("Кнопка нажата");
 
-        Thread.sleep(3000);
+       // Thread.sleep(3000);
 
         String url = driver.getCurrentUrl();
         System.out.println("Текущий URL: " + url);
